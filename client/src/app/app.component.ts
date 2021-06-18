@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { AccountService } from './_services/account.service';
+import { User } from './_models/user';
 
 
 @Component({
@@ -8,15 +10,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'The social App';
+  title = 'The Social App';
   users: any;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private accountService: AccountService) {
 
   }
 
   ngOnInit() {
     this.getUsers();
+    this.setCurrentUser();
+  }
+
+  setCurrentUser() {
+
+    //const user: User = JSON.parse(localStorage.getItem('user') || '{}');
+    const user: User = JSON.parse(localStorage.getItem('user')!);
+    this.accountService.setCurrentUser(user);
   }
 
   getUsers() {
